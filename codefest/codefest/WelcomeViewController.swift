@@ -11,11 +11,16 @@ import GoogleMaps
 import GooglePlaces
 
 class WelcomeViewController: UIViewController {
-
+   
+   
     override func viewDidLoad() {
+       
         
         super.viewDidLoad()
         
-        
     }
+    
+    @IBAction func sign_up(_ sender: Any) {
+    }
+    
 }

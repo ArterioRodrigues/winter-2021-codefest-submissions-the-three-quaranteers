@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -39,11 +40,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KfC-di-qTW">
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KfC-di-qTW">
                                 <rect key="frame" x="87" y="250" width="252" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
+                                <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NmG-ER-LWY">
                                 <rect key="frame" x="87" y="309" width="252" height="34"/>
@@ -66,16 +67,31 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="26S-Q3-elS">
                                 <rect key="frame" x="87" y="513" width="252" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Take me to the near bathroom">
+                                <state key="normal" title="Take me to the nearest bathroom">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="titleShadowColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                             </button>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u2Q-rO-8S6">
+                                <rect key="frame" x="20" y="0.0" width="374" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Sign up" id="nZP-LF-fyw">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="V93-GC-mqa">
+                                            <imageReference key="image" image="chevron.backward" catalog="system" symbolScale="default" renderingMode="original"/>
+                                            <connections>
+                                                <segue destination="QvL-rx-SH9" kind="show" id="rOX-qW-ol5"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="r1j-Rh-cQg"/>
                         <color key="backgroundColor" systemColor="secondaryLabelColor"/>
-                        <color key="tintColor" systemColor="systemRedColor"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
+                    <navigationItem key="navigationItem" id="bH8-8p-f5f"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CLc-v4-udF" sceneMemberID="firstResponder"/>
             </objects>
@@ -94,27 +110,52 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
+                                <connections>
+                                    <action selector="username:" destination="PXK-gr-ehZ" eventType="editingDidEnd" id="MNB-oa-6bQ"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IPR-W8-eW0">
                                 <rect key="frame" x="83" y="355" width="252" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="password:" destination="PXK-gr-ehZ" eventType="editingDidEnd" id="R17-We-gMf"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m2g-Bx-XYw">
-                                <rect key="frame" x="120" y="427" width="175" height="114"/>
+                                <rect key="frame" x="120" y="427" width="180" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Login"/>
+                                <state key="normal" title="Login">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
                                 <connections>
                                     <segue destination="BYZ-38-t0r" kind="presentation" modalPresentationStyle="fullScreen" id="IQc-5Z-khV"/>
                                 </connections>
                             </button>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EXy-0U-qGj">
+                                <rect key="frame" x="20" y="0.0" width="374" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Login" id="UGt-af-k4D">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="7BA-8v-BmZ">
+                                            <imageReference key="image" image="chevron.backward" catalog="system" symbolScale="default" renderingMode="original"/>
+                                            <connections>
+                                                <segue destination="QvL-rx-SH9" kind="show" id="Ovi-wa-de3"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="wVM-j6-wUT"/>
                         <color key="backgroundColor" systemColor="secondaryLabelColor"/>
                         <color key="tintColor" systemColor="systemRedColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="9k6-d5-aoD"/>
+                    <navigationItem key="navigationItem" id="Pn2-uQ-6ed"/>
+                    <connections>
+                        <outlet property="back_to_home" destination="7BA-8v-BmZ" id="acE-wx-9FL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KnQ-Hn-37l" sceneMemberID="firstResponder"/>
             </objects>
@@ -125,7 +166,7 @@
             <objects>
                 <viewController id="QvL-rx-SH9" userLabel="Welcome Controller" customClass="WelcomeViewController" customModule="codefest" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CLk-R7-wQO">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome to the Bathroom Finder" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0pg-Oc-IrM">
@@ -152,21 +193,32 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <state key="normal" title="Sign up"/>
                                 <connections>
+                                    <action selector="sign_up:" destination="QvL-rx-SH9" eventType="touchUpInside" id="P7S-mK-kCC"/>
                                     <segue destination="pbn-Ks-rRq" kind="show" id="t5L-4Z-5A6"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Screen icon" translatesAutoresizingMaskIntoConstraints="NO" id="Wce-MB-mvC">
+                                <rect key="frame" x="87" y="165" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="SQ6-12-QIi"/>
                         <color key="backgroundColor" red="0.011764705882352941" green="0.21176470588235294" blue="0.40392156862745099" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <color key="tintColor" systemColor="systemRedColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="pBW-jS-len"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gUy-qJ-zFi" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2372.463768115942" y="474.77678571428567"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Ovi-wa-de3"/>
+    </inferredMetricsTieBreakers>
     <resources>
+        <image name="Screen icon" width="168" height="172"/>
+        <image name="chevron.backward" catalog="system" width="96" height="128"/>
         <systemColor name="placeholderTextColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

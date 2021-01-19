@@ -11,9 +11,13 @@ import GoogleMaps
 import GooglePlaces
 
 class LoginViewController: UIViewController {
+    
+    //this is connected to the welcome page and goes back when tapped
 
     override func viewDidLoad() {
-        
         super.viewDidLoad()
     }
+    
+    
+   
 }

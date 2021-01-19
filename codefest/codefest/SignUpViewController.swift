@@ -12,7 +12,7 @@ import GooglePlaces
 
 class SignUpViewController: UIViewController {
 
-    @IBOutlet weak var BacktoHome: UIButton!
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
