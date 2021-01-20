@@ -110,18 +110,12 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
-                                <connections>
-                                    <action selector="username:" destination="PXK-gr-ehZ" eventType="editingDidEnd" id="MNB-oa-6bQ"/>
-                                </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IPR-W8-eW0">
                                 <rect key="frame" x="83" y="355" width="252" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="password:" destination="PXK-gr-ehZ" eventType="editingDidEnd" id="R17-We-gMf"/>
-                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m2g-Bx-XYw">
                                 <rect key="frame" x="120" y="427" width="180" height="41"/>
@@ -153,9 +147,6 @@
                         <color key="tintColor" systemColor="systemRedColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="Pn2-uQ-6ed"/>
-                    <connections>
-                        <outlet property="back_to_home" destination="7BA-8v-BmZ" id="acE-wx-9FL"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KnQ-Hn-37l" sceneMemberID="firstResponder"/>
             </objects>
@@ -193,7 +184,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <state key="normal" title="Sign up"/>
                                 <connections>
-                                    <action selector="sign_up:" destination="QvL-rx-SH9" eventType="touchUpInside" id="P7S-mK-kCC"/>
                                     <segue destination="pbn-Ks-rRq" kind="show" id="t5L-4Z-5A6"/>
                                 </connections>
                             </button>
@@ -214,7 +204,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Ovi-wa-de3"/>
+        <segue reference="rOX-qW-ol5"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Screen icon" width="168" height="172"/>

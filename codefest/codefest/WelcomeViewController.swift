@@ -20,7 +20,6 @@ class WelcomeViewController: UIViewController {
         
     }
     
-    @IBAction func sign_up(_ sender: Any) {
-    }
+  
     
 }
