@@ -16,7 +16,7 @@ class WelcomeViewController: UIViewController {
    
     override func viewDidLoad() {
        
-        let handle = Auth.auth().addStateDidChangeListener { (auth, user) in
+        _ = Auth.auth().addStateDidChangeListener { (auth, user) in
             if user != nil{
                 let mapViewController = self.storyboard?.instantiateViewController(identifier: Constants.Storyboard.mapViewController) as? MapViewController
                 self.view.window?.rootViewController = mapViewController
