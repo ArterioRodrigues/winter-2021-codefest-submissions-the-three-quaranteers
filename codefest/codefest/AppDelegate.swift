@@ -21,8 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSPlacesClient.provideAPIKey("AIzaSyCa7QvPcW4LRhbflCGpU6_J23iwyl-XwOE")
         
         //This connects app to firebase once the app starts up
-           FirebaseApp.configure()
-           return true
+        FirebaseApp.configure()
+        return true
 
        
     }
