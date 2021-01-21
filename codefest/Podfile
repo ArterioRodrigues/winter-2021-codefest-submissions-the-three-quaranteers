@@ -8,7 +8,6 @@ target 'codefest' do
         # Pods for codefest
         pod 'GoogleMaps', '4.1.0'
         pod 'GooglePlaces', '4.1.0'
-        pod 'GoogleMapsDirections', '1.1'
         #pods for firebase
         # add the Firebase pod for Google Analytics
         pod 'Firebase/Analytics'
@@ -18,6 +17,5 @@ target 'codefest' do
         # For example, to use Firebase Authentication and Cloud Firestore
         pod 'Firebase/Auth'
         pod 'Firebase/Firestore'
-        pod 'FirebaseUI'
         #https://firebase.google.com/docs/ios/setup#available-pods
 end
