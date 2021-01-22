@@ -25,6 +25,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //To add functionality to mapview delegate, this needs to be done 
         mapView.delegate = self
         let button = UIButton(frame: CGRect(x: 50, y: 50, width: 100, height: 100))
         button.setTitle("Button", for: .normal)
@@ -52,7 +53,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate{
     }
     
     
-    
+    //When the view loads, it'll draw the markers onto the map
     func drawMarkers(){
         ref = Database.database().reference()
         ref.child("Location").observeSingleEvent(of: .value, with: { snapshot in
@@ -72,7 +73,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate{
         })
     }
     
-    
+    //This function allows us to draw the path when the user clicks on the marker
     func drawPath(destination: CLLocationCoordinate2D){
         let currentlocation = locationManager.location!.coordinate
         let start = "\(currentlocation.latitude),\(currentlocation.longitude)"
@@ -107,7 +108,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate{
         }
     }
     
-
+    //We might delete this, but i'll have it here just in case
     @objc func handleTap(_ sender: UIButton) {
         // Add the map to the view, hide it until we've got a location update.
         let destination = CLLocationCoordinate2D(latitude: locationManager.location!.coordinate.latitude + 0.005, longitude: locationManager.location!.coordinate.longitude + 0.005)
@@ -119,6 +120,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate{
         drawPath(destination: destination)
     }
     
+    //This checks when the button was pressed
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         let destination = CLLocationCoordinate2D(latitude: marker.position.latitude, longitude: marker.position.longitude)
         drawPath(destination: destination)
