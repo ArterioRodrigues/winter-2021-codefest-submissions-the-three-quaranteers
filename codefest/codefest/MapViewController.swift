@@ -8,118 +8,123 @@
 import UIKit
 import GoogleMaps
 import GooglePlaces
+import SwiftyJSON
+import Alamofire
+import Firebase
+import FirebaseDatabase
+class MapViewController: UIViewController, GMSMapViewDelegate{
 
-class MapViewController: UIViewController{
-
-  var locationManager: CLLocationManager!
-  var currentLocation: CLLocation?
-  var mapView: GMSMapView!
-  var placesClient: GMSPlacesClient!
-  var preciseLocationZoomLevel: Float = 15.0
-  var approximateLocationZoomLevel: Float = 10.0
-
-  // An array to hold the list of likely places.
-  var likelyPlaces: [GMSPlace] = []
-
-  // The currently selected place.
-  var selectedPlace: GMSPlace?
-
-  // Update the map once the user has made their selection.
-  @IBAction func unwindToMain(segue: UIStoryboardSegue) {
-    // Clear the map.
-    mapView.clear()
-
-    // Add a marker to the map.
-    if let place = selectedPlace {
-      let marker = GMSMarker(position: place.coordinate)
-      marker.title = selectedPlace?.name
-      marker.snippet = selectedPlace?.formattedAddress
-      marker.map = mapView
-    }
-
-    //listLikelyPlaces()
+    var locationManager: CLLocationManager!
+    var currentLocation: CLLocation?
+    @IBOutlet weak var mapView: GMSMapView!
+    var placesClient: GMSPlacesClient!
+    var preciseLocationZoomLevel: Float = 15.0
+    var approximateLocationZoomLevel: Float = 10.0
+    var ref: DatabaseReference!
+    var oldRoute: GMSPolyline!
     
-  }
-
     override func viewDidLoad() {
-    super.viewDidLoad()
+        super.viewDidLoad()
+        mapView.delegate = self
+        let button = UIButton(frame: CGRect(x: 50, y: 50, width: 100, height: 100))
+        button.setTitle("Button", for: .normal)
+        button.setTitleColor(.red, for: .normal)
+        button.addTarget(self, action: #selector(handleTap), for: .touchUpInside)
+        self.view.addSubview(button)
+        // Initialize the location manager.
+        locationManager = CLLocationManager()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.distanceFilter = 50
+        locationManager.startUpdatingLocation()
+        locationManager.delegate = self
+        
+
+        // A default location to use when location permission is not granted.
+        let defaultLocation = CLLocation(latitude: -33.869405, longitude: 151.199)
+        
+        // Create a map.
+        mapView.isMyLocationEnabled = true
+        mapView.settings.myLocationButton = true
+        mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        mapView.isMyLocationEnabled = true
+        drawMarkers()
+    }
     
-    // Initialize the location manager.
-    locationManager = CLLocationManager()
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest
-    locationManager.requestWhenInUseAuthorization()
-    locationManager.distanceFilter = 50
-    locationManager.startUpdatingLocation()
-    locationManager.delegate = self
-
-    placesClient = GMSPlacesClient.shared()
-
-    // A default location to use when location permission is not granted.
-    let defaultLocation = CLLocation(latitude: -33.869405, longitude: 151.199)
     
-    // Create a map.
-    let zoomLevel = locationManager.accuracyAuthorization == .fullAccuracy ? preciseLocationZoomLevel : approximateLocationZoomLevel
-    let camera = GMSCameraPosition.camera(withLatitude: defaultLocation.coordinate.latitude,
-                                          longitude: defaultLocation.coordinate.longitude,
-                                          zoom: zoomLevel)
-    mapView = GMSMapView.map(withFrame: view.bounds, camera: camera)
-    mapView.settings.myLocationButton = true
-    mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    mapView.isMyLocationEnabled = true
-
-    // Add the map to the view, hide it until we've got a location update.
-    view.addSubview(mapView)
-        let button = UIButton(frame: CGRect(x: 50, y: -50, width: 100, height: 50))
-    view.addSubview(button)
-    //view.addSubview(markerOnCL)
-    //mapView.isHidden = true
-
-    //listLikelyPlaces()
     
-  }
-    @IBAction func markerOnCL(_ sender: UIButton) {
-        // Creates a marker in the center of the map.
+    func drawMarkers(){
+        ref = Database.database().reference()
+        ref.child("Location").observeSingleEvent(of: .value, with: { snapshot in
+            let dict = snapshot.value as! NSDictionary
+            for (key, _)in dict{
+                if let coord = dict[key] as? String {
+                    let str = coord.components(separatedBy: ",")
+                    let lat = (str[0] as NSString).doubleValue
+                    let long = (str[1] as NSString).doubleValue
+                    let position = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                    let marker = GMSMarker(position: position)
+                    marker.title = "Random Location"
+                    marker.snippet = "Hopefully this works"
+                    marker.map = self.mapView
+                }
+            }
+        })
+    }
+    
+    
+    func drawPath(destination: CLLocationCoordinate2D){
+        let currentlocation = locationManager.location!.coordinate
+        let start = "\(currentlocation.latitude),\(currentlocation.longitude)"
+        let end = "\(destination.latitude),\(destination.longitude)"
+        let url =  "https://maps.googleapis.com/maps/api/directions/json?origin=\(start)&destination=\(end)&mode=walking&key=AIzaSyCa7QvPcW4LRhbflCGpU6_J23iwyl-XwOE"
+        AF.request(url).responseJSON { (response) in
+            guard let data = response.data else {
+                return
+            }
+            do{
+                let jsonData = try JSON(data: data)
+                let routes = jsonData["routes"].arrayValue
+                for route in routes{
+                    let overview_polyline = route["overview_polyline"].dictionary
+                    let points = overview_polyline?["points"]?.string
+                    let path = GMSPath.init(fromEncodedPath: points ?? "")
+                    let polyline = GMSPolyline.init(path: path)
+                    polyline.strokeColor = .systemGreen
+                    polyline.strokeWidth = 5
+                    if self.oldRoute != nil{
+                        self.oldRoute.map = nil
+                    }
+                    self.oldRoute = polyline
+                    self.oldRoute.map = self.mapView
+                    
+                }
+            }
+            catch let error{
+                print(error.localizedDescription)
+            }
+            
+        }
+    }
+    
+
+    @objc func handleTap(_ sender: UIButton) {
+        // Add the map to the view, hide it until we've got a location update.
+        let destination = CLLocationCoordinate2D(latitude: locationManager.location!.coordinate.latitude + 0.005, longitude: locationManager.location!.coordinate.longitude + 0.005)
         let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: locationManager.location!.coordinate.latitude , longitude: locationManager.location!.coordinate.longitude)
-        marker.title = "My Housey"
-        marker.snippet = "Don't stalk pls"
+        marker.position = destination
+        marker.title = "Random Location"
+        marker.snippet = "Hopefully this works"
         marker.map = mapView
+        drawPath(destination: destination)
     }
-/*
-  // Populate the array with the list of likely places.
-  func listLikelyPlaces() {
-    // Clean up from previous sessions.
-    likelyPlaces.removeAll()
-
-    let placeFields: GMSPlaceField = GMSPlaceField(rawValue: GMSPlaceField.name.rawValue | GMSPlaceField.coordinate.rawValue)
-    placesClient.findPlaceLikelihoodsFromCurrentLocation(withPlaceFields: placeFields) { (placeLikelihoods, error) in
-      guard error == nil else {
-        // TODO: Handle the error.
-        print("Current Place error: \(error!.localizedDescription)")
-        return
-      }
-
-      guard let placeLikelihoods = placeLikelihoods else {
-        print("No places found.")
-        return
-      }
-      
-      // Get likely places and add to the list.
-      for likelihood in placeLikelihoods {
-        let place = likelihood.place
-        self.likelyPlaces.append(place)
-      }
+    
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        let destination = CLLocationCoordinate2D(latitude: marker.position.latitude, longitude: marker.position.longitude)
+        drawPath(destination: destination)
+        print("YUURRRRR")
+        return true
     }
-  }
-
-  // Prepare the segue.
-  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if segue.identifier == "segueToSelect" {
-      if let nextViewController = segue.destination as? PlacesViewController {
-        nextViewController.likelyPlaces = likelyPlaces
-      }
-    }
-  }*/
 }
 
 // Delegates to handle events for the location manager.
@@ -129,23 +134,11 @@ extension MapViewController: CLLocationManagerDelegate {
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     let location: CLLocation = locations.last!
     print("Location: \(location)")
-    print(location.coordinate.longitude)
-    print(location.coordinate.latitude)
-    print("RANDOM")
-
     let zoomLevel = locationManager.accuracyAuthorization == .fullAccuracy ? preciseLocationZoomLevel : approximateLocationZoomLevel
     let camera = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
-                                          longitude: location.coordinate.longitude,
-                                          zoom: zoomLevel)
-
-    if mapView.isHidden {
-      mapView.isHidden = false
-      mapView.camera = camera
-    } else {
-      mapView.animate(to: camera)
-    }
-
-    //listLikelyPlaces()
+        longitude: location.coordinate.longitude,
+        zoom: zoomLevel)
+    mapView.animate(to: camera)
   }
 
   // Handle authorization for the location manager.

@@ -17,5 +17,8 @@ target 'codefest' do
         # For example, to use Firebase Authentication and Cloud Firestore
         pod 'Firebase/Auth'
         pod 'Firebase/Firestore'
+        pod 'SwiftyJSON', '5.0'
+        pod 'Alamofire', '5.4'
+        pod 'Firebase/Database'
         #https://firebase.google.com/docs/ios/setup#available-pods
 end
