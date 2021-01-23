@@ -25,8 +25,18 @@ class MapViewController: UIViewController, GMSMapViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //To add functionality to mapview delegate, this needs to be done 
+        //To add functionality to mapview delegate, this needs to be done
         mapView.delegate = self
+        do{
+            if let styleURL = Bundle.main.url(forResource: "style", withExtension: "json"){
+                mapView.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
+            }else{
+                NSLog("Unable to find style.json")
+            }
+        }catch{
+                NSLog("One or more of the map styles failed to load. \(error)")
+        }
+        
         let button = UIButton(frame: CGRect(x: 50, y: 50, width: 100, height: 100))
         button.setTitle("Button", for: .normal)
         button.setTitleColor(.red, for: .normal)
@@ -39,10 +49,6 @@ class MapViewController: UIViewController, GMSMapViewDelegate{
         locationManager.distanceFilter = 50
         locationManager.startUpdatingLocation()
         locationManager.delegate = self
-        
-
-        // A default location to use when location permission is not granted.
-        let defaultLocation = CLLocation(latitude: -33.869405, longitude: 151.199)
         
         // Create a map.
         mapView.isMyLocationEnabled = true
@@ -64,12 +70,14 @@ class MapViewController: UIViewController, GMSMapViewDelegate{
                     let lat = (str[0] as NSString).doubleValue
                     let long = (str[1] as NSString).doubleValue
                     let position = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                    let marker = GMSMarker(position: position)
+                    let marker = GMSMarker()
+                    marker.position = position
                     marker.title = "Random Location"
                     marker.snippet = "Hopefully this works"
                     marker.map = self.mapView
                 }
             }
+ 
         })
     }
     
@@ -124,10 +132,12 @@ class MapViewController: UIViewController, GMSMapViewDelegate{
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         let destination = CLLocationCoordinate2D(latitude: marker.position.latitude, longitude: marker.position.longitude)
         drawPath(destination: destination)
-        print("YUURRRRR")
+        mapView.selectedMarker = marker
         return true
     }
 }
+
+
 
 // Delegates to handle events for the location manager.
 extension MapViewController: CLLocationManagerDelegate {

@@ -18,6 +18,7 @@
 		D2CEEC5A25B16A99000E6DC6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CEEC5925B16A99000E6DC6 /* LoginViewController.swift */; };
 		D2CEEC5D25B16AAF000E6DC6 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CEEC5C25B16AAF000E6DC6 /* SignUpViewController.swift */; };
 		D2CEEC6025B16ABD000E6DC6 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CEEC5F25B16ABD000E6DC6 /* WelcomeViewController.swift */; };
+		D2F3485B25BBC289001163EA /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = D2F3485A25BBC289001163EA /* style.json */; };
 		D2F3883125B7E4FD008EB0E1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F3883025B7E4FD008EB0E1 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,7 @@
 		D2CEEC5925B16A99000E6DC6 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D2CEEC5C25B16AAF000E6DC6 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		D2CEEC5F25B16ABD000E6DC6 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		D2F3485A25BBC289001163EA /* style.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = style.json; path = ../../../../../Downloads/style.json; sourceTree = "<group>"; };
 		D2F3883025B7E4FD008EB0E1 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -100,6 +102,7 @@
 				D2CEEC4325AD8267000E6DC6 /* Assets.xcassets */,
 				D2CEEC4525AD8267000E6DC6 /* LaunchScreen.storyboard */,
 				D2CEEC4825AD8267000E6DC6 /* Info.plist */,
+				D2F3485A25BBC289001163EA /* style.json */,
 				B943442B25B719FC00A41101 /* GoogleService-Info.plist */,
 				D2F3883025B7E4FD008EB0E1 /* Constants.swift */,
 			);
@@ -169,6 +172,7 @@
 				D2CEEC4725AD8267000E6DC6 /* LaunchScreen.storyboard in Resources */,
 				B943442C25B719FC00A41101 /* GoogleService-Info.plist in Resources */,
 				D2CEEC4425AD8267000E6DC6 /* Assets.xcassets in Resources */,
+				D2F3485B25BBC289001163EA /* style.json in Resources */,
 				D2CEEC4225AD8262000E6DC6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
