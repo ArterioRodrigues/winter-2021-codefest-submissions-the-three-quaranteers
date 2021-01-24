@@ -26,7 +26,7 @@
 9.) Run ```pod install```
 
 
-#How to Run:
+# How to Run:
 
 1.) Now that your dependencies have been installed, go to the project on Xcode and run the simulator that is built with XCode or Run the project with your iPhone device plugged into your computer 
 
