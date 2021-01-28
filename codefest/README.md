@@ -1,4 +1,4 @@
-**Toicator**
+#Toicator
 
 **Have you ever been outside and you really needed to use the bathroom? Or that you didn't know that you had to buy something before using the bathroom? Or if you walked into a really gross bathroom? Well- this app we built could help with that! 
 
