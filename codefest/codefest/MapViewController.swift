@@ -27,7 +27,6 @@ class MapViewController: UIViewController, GMSMapViewDelegate, GMSAutocompleteVi
     var ref: DatabaseReference!
     @IBOutlet weak var searchButton: UIButton!
     var passOver: GMSPlace!
-    
     @IBOutlet weak var addButton: UIButton!
     var oldRoute: GMSPolyline!
     
@@ -66,6 +65,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate, GMSAutocompleteVi
         mapView.isMyLocationEnabled = true
         drawMarkers()
         
+        
     }
     
     
@@ -73,27 +73,26 @@ class MapViewController: UIViewController, GMSMapViewDelegate, GMSAutocompleteVi
     //When the view loads, it'll draw the markers onto the map
     func drawMarkers(){
         let db = Firestore.firestore()
-        db.collection("locations").getDocuments(){ (querySnapshot, err ) in
-            if let err = err{
-                print("Error getting documents: \(err)")
-            }else{
-                for document in querySnapshot!.documents{
-                    print("\(document.documentID) => \(document.data())")
-                    print(type(of: document.data()["longitude"]))
-                    let lat = document.data()["latitude"]
-                    let long = document.data()["longitude"]
-                    let name =  document.data()["name"]
-                    let address = document.data()["address"]
-                    let position = CLLocationCoordinate2D(latitude: lat as! CLLocationDegrees, longitude: long as! CLLocationDegrees)
-                    let marker = GMSMarker()
-                    marker.position = position
-                    marker.title = name as? String
-                    marker.snippet = address as? String
-                    marker.map = self.mapView                }
-                
+        db.collection("locations").addSnapshotListener({ [self]querySnapshot, error in
+            guard let documents = querySnapshot?.documents else{
+                print("Error fetching document: \(error!)")
+                return
             }
-        
-        }
+            for document in documents{
+                print("\(document.documentID) => \(document.data())")
+                print(type(of: document.data()["longitude"]))
+                let lat = document.data()["latitude"]
+                let long = document.data()["longitude"]
+                let name =  document.data()["name"]
+                let address = document.data()["address"]
+                let position = CLLocationCoordinate2D(latitude: lat as! CLLocationDegrees, longitude: long as! CLLocationDegrees)
+                let marker = GMSMarker()
+                marker.position = position
+                marker.title = name as? String
+                marker.snippet = address as? String
+                marker.map = self.mapView
+            }
+        })
     }
     
     //This function allows us to draw the path when the user clicks on the marker
@@ -116,11 +115,17 @@ class MapViewController: UIViewController, GMSMapViewDelegate, GMSAutocompleteVi
                     let polyline = GMSPolyline.init(path: path)
                     polyline.strokeColor = .systemGreen
                     polyline.strokeWidth = 5
-                    if self.oldRoute != nil{
-                        self.oldRoute.map = nil
+                    if self.oldRoute != nil || polyline == self.oldRoute{
+                        self.oldRoute.map = nil //this turns off the direction if the user presses on it again
+                        self.oldRoute = nil
+                        print("SAME")
                     }
-                    self.oldRoute = polyline
-                    self.oldRoute.map = self.mapView
+                    else{
+                        print("NEW")
+                        self.oldRoute = polyline
+                        self.oldRoute.map = self.mapView
+                    }
+                    
                     
                 }
             }
@@ -172,6 +177,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate, GMSAutocompleteVi
         print("Latitude: \(place.coordinate.latitude)")
         print("Longitude: \(place.coordinate.longitude)")
         if (selectedButton == true){
+            
             passOver = place
             selectedButton = false
             let popover = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "PopUp") as! PopUpViewController
@@ -206,15 +212,6 @@ class MapViewController: UIViewController, GMSMapViewDelegate, GMSAutocompleteVi
       func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
        // UIApplication.shared.isNetworkActivityIndicatorVisible = false
       }
-    
-    @IBAction func showPopUp(_ sender: Any) {
-        let popover = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "PopUp") as! PopUpViewController
-        self.addChild(popover)
-        popover.view.frame = self.view.frame
-        self.view.addSubview(popover.view)
-        popover.didMove(toParent: self)
-        popover.name.text = "a"
-    }
 }
 
 

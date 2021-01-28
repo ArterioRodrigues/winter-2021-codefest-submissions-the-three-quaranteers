@@ -36,28 +36,16 @@
                                                 </connections>
                                             </button>
                                         </barButtonItem>
-                                        <rightBarButtonItems>
-                                            <barButtonItem style="plain" id="rdI-uo-gUm">
-                                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="Rt4-Pk-n2B">
-                                                    <rect key="frame" x="364" y="7" width="30" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" title="Add"/>
-                                                    <connections>
-                                                        <action selector="autcompleteClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ddz-Br-9DH"/>
-                                                    </connections>
-                                                </button>
-                                            </barButtonItem>
-                                            <barButtonItem style="plain" id="hHf-co-s3h">
-                                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="kBs-pq-hN1">
-                                                    <rect key="frame" x="264" y="7" width="92" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" title="test"/>
-                                                    <connections>
-                                                        <action selector="showPopUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="q9Z-eW-FwE"/>
-                                                    </connections>
-                                                </button>
-                                            </barButtonItem>
-                                        </rightBarButtonItems>
+                                        <barButtonItem key="rightBarButtonItem" style="plain" id="rdI-uo-gUm">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="Rt4-Pk-n2B">
+                                                <rect key="frame" x="364" y="7" width="30" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="Add"/>
+                                                <connections>
+                                                    <action selector="autcompleteClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ddz-Br-9DH"/>
+                                                </connections>
+                                            </button>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -76,7 +64,6 @@
                         <outlet property="addButton" destination="Rt4-Pk-n2B" id="jQi-dT-vYG"/>
                         <outlet property="mapView" destination="I7E-XK-W6a" id="MIq-WS-tBi"/>
                         <outlet property="searchButton" destination="hHS-s7-1QO" id="eJQ-Gb-IDp"/>
-                        <outlet property="test" destination="kBs-pq-hN1" id="ofI-yL-emb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
