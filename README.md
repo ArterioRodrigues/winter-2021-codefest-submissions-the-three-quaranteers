@@ -15,7 +15,7 @@ ChacaPatrick, Chaca, Patrick
 ## Theme: Create a Passion Project - Make something you've always wanted to build!
 Think of something you've always wanted to make and bring to life, and do it! To make it easier for our judges and to have some form of organization, all we ask is to try to keep it within one of these categories:
 -   Productivity
--   Social Good
+-   **Social Good**
 -   Education
     
 Please incorporate it into your project, and we hope to see new, exciting, and innovative projects!
