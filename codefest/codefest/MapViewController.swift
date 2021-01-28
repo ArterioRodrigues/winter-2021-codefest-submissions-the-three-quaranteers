@@ -12,21 +12,30 @@ import SwiftyJSON
 import Alamofire
 import Firebase
 import FirebaseDatabase
-class MapViewController: UIViewController, GMSMapViewDelegate{
+class MapViewController: UIViewController, GMSMapViewDelegate, GMSAutocompleteViewControllerDelegate{
 
+    @IBOutlet weak var test: UIButton!
+    
+    
     var locationManager: CLLocationManager!
+    var selectedButton: Bool!
     var currentLocation: CLLocation?
     @IBOutlet weak var mapView: GMSMapView!
     var placesClient: GMSPlacesClient!
     var preciseLocationZoomLevel: Float = 15.0
     var approximateLocationZoomLevel: Float = 10.0
     var ref: DatabaseReference!
+    @IBOutlet weak var searchButton: UIButton!
+    var passOver: GMSPlace!
+    
+    @IBOutlet weak var addButton: UIButton!
     var oldRoute: GMSPolyline!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //To add functionality to mapview delegate, this needs to be done
         mapView.delegate = self
+        
         do{
             if let styleURL = Bundle.main.url(forResource: "style", withExtension: "json"){
                 mapView.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
@@ -37,11 +46,11 @@ class MapViewController: UIViewController, GMSMapViewDelegate{
                 NSLog("One or more of the map styles failed to load. \(error)")
         }
         
-        let button = UIButton(frame: CGRect(x: 50, y: 50, width: 100, height: 100))
+        /*let button = UIButton(frame: CGRect(x: 50, y: 50, width: 100, height: 100))
         button.setTitle("Button", for: .normal)
         button.setTitleColor(.red, for: .normal)
         button.addTarget(self, action: #selector(handleTap), for: .touchUpInside)
-        self.view.addSubview(button)
+        self.view.addSubview(button)*/
         // Initialize the location manager.
         locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -56,29 +65,35 @@ class MapViewController: UIViewController, GMSMapViewDelegate{
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         mapView.isMyLocationEnabled = true
         drawMarkers()
+        
     }
+    
     
     
     //When the view loads, it'll draw the markers onto the map
     func drawMarkers(){
-        ref = Database.database().reference()
-        ref.child("Location").observeSingleEvent(of: .value, with: { snapshot in
-            let dict = snapshot.value as! NSDictionary
-            for (key, _)in dict{
-                if let coord = dict[key] as? String {
-                    let str = coord.components(separatedBy: ",")
-                    let lat = (str[0] as NSString).doubleValue
-                    let long = (str[1] as NSString).doubleValue
-                    let position = CLLocationCoordinate2D(latitude: lat, longitude: long)
+        let db = Firestore.firestore()
+        db.collection("locations").getDocuments(){ (querySnapshot, err ) in
+            if let err = err{
+                print("Error getting documents: \(err)")
+            }else{
+                for document in querySnapshot!.documents{
+                    print("\(document.documentID) => \(document.data())")
+                    print(type(of: document.data()["longitude"]))
+                    let lat = document.data()["latitude"]
+                    let long = document.data()["longitude"]
+                    let name =  document.data()["name"]
+                    let address = document.data()["address"]
+                    let position = CLLocationCoordinate2D(latitude: lat as! CLLocationDegrees, longitude: long as! CLLocationDegrees)
                     let marker = GMSMarker()
                     marker.position = position
-                    marker.title = "Random Location"
-                    marker.snippet = "Hopefully this works"
-                    marker.map = self.mapView
-                }
+                    marker.title = name as? String
+                    marker.snippet = address as? String
+                    marker.map = self.mapView                }
+                
             }
- 
-        })
+        
+        }
     }
     
     //This function allows us to draw the path when the user clicks on the marker
@@ -116,17 +131,6 @@ class MapViewController: UIViewController, GMSMapViewDelegate{
         }
     }
     
-    //We might delete this, but i'll have it here just in case
-    @objc func handleTap(_ sender: UIButton) {
-        // Add the map to the view, hide it until we've got a location update.
-        let destination = CLLocationCoordinate2D(latitude: locationManager.location!.coordinate.latitude + 0.005, longitude: locationManager.location!.coordinate.longitude + 0.005)
-        let marker = GMSMarker()
-        marker.position = destination
-        marker.title = "Random Location"
-        marker.snippet = "Hopefully this works"
-        marker.map = mapView
-        drawPath(destination: destination)
-    }
     
     //This checks when the button was pressed
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
@@ -135,12 +139,88 @@ class MapViewController: UIViewController, GMSMapViewDelegate{
         mapView.selectedMarker = marker
         return true
     }
+    
+    @IBAction func autcompleteClicked(_ sender: UIButton) {
+        if sender == addButton{
+                selectedButton = true
+        }
+        let autocompleteController = GMSAutocompleteViewController()
+            autocompleteController.delegate = self
+
+            // Specify the place data types to return.
+        let fields: GMSPlaceField = [.all]
+            autocompleteController.placeFields = fields
+
+            // Specify a filter.
+            let filter = GMSAutocompleteFilter()
+        filter.type = .establishment
+            autocompleteController.autocompleteFilter = filter
+
+            // Display the autocomplete view controller.
+            present(autocompleteController, animated: true, completion: nil)
+        
+
+    }
+    
+    //extension MapViewController: GMSAutocompleteViewControllerDelegate{
+    
+    // Handle the user's selection.
+      func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        print("Place name: \(place.name)")
+        print("Place ID: \(place.placeID)")
+        print("Place Location: \(place.coordinate)")
+        print("Latitude: \(place.coordinate.latitude)")
+        print("Longitude: \(place.coordinate.longitude)")
+        if (selectedButton == true){
+            passOver = place
+            selectedButton = false
+            let popover = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "PopUp") as! PopUpViewController
+            self.addChild(popover)
+            popover.view.frame = self.view.frame
+            self.view.addSubview(popover.view)
+            popover.didMove(toParent: self)
+            popover.places = place
+            popover.name.text = place.formattedAddress!
+            passOver = nil
+        }
+        
+        dismiss(animated: true, completion: nil)
+      }
+
+        
+      func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+        // TODO: handle the error.
+        print("Error: ", error.localizedDescription)
+      }
+
+      // User canceled the operation.
+      func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        dismiss(animated: true, completion: nil)
+      }
+
+      // Turn the network activity indicator on and off again.
+      func didRequestAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+       // UIApplication.shared.isNetworkActivityIndicatorVisible = true
+      }
+
+      func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+       // UIApplication.shared.isNetworkActivityIndicatorVisible = false
+      }
+    
+    @IBAction func showPopUp(_ sender: Any) {
+        let popover = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "PopUp") as! PopUpViewController
+        self.addChild(popover)
+        popover.view.frame = self.view.frame
+        self.view.addSubview(popover.view)
+        popover.didMove(toParent: self)
+        popover.name.text = "a"
+    }
 }
 
 
 
 // Delegates to handle events for the location manager.
-extension MapViewController: CLLocationManagerDelegate {
+extension MapViewController: CLLocationManagerDelegate{
 
   // Handle incoming location events.
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -189,4 +269,6 @@ extension MapViewController: CLLocationManagerDelegate {
     locationManager.stopUpdatingLocation()
     print("Error: \(error)")
   }
+    
 }
+
