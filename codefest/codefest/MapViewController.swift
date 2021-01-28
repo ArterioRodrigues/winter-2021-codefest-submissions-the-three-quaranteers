@@ -115,16 +115,25 @@ class MapViewController: UIViewController, GMSMapViewDelegate, GMSAutocompleteVi
                     let polyline = GMSPolyline.init(path: path)
                     polyline.strokeColor = .systemGreen
                     polyline.strokeWidth = 5
-                    if self.oldRoute != nil || polyline == self.oldRoute{
-                        self.oldRoute.map = nil //this turns off the direction if the user presses on it again
-                        self.oldRoute = nil
-                        print("SAME")
+                    if(self.oldRoute != nil){
+                        if(polyline.path?.encodedPath() == self.oldRoute.path?.encodedPath()){ //encoded string of the path compared to each other
+                            self.oldRoute.map = nil //this turns off the direction if the user presses on it again
+                            self.oldRoute = nil
+                        }
+                        else{
+                                self.oldRoute.map = nil
+                                self.oldRoute = nil
+                                self.oldRoute = polyline
+                                self.oldRoute.map = self.mapView
+                        }
                     }
                     else{
-                        print("NEW")
                         self.oldRoute = polyline
                         self.oldRoute.map = self.mapView
                     }
+                    
+ 
+                    
                     
                     
                 }
@@ -189,7 +198,11 @@ class MapViewController: UIViewController, GMSMapViewDelegate, GMSAutocompleteVi
             popover.name.text = place.formattedAddress!
             passOver = nil
         }
-        
+        let zoomLevel = locationManager.accuracyAuthorization == .fullAccuracy ? preciseLocationZoomLevel : approximateLocationZoomLevel
+        let camera = GMSCameraPosition.camera(withLatitude: place.coordinate.latitude,
+            longitude: place.coordinate.longitude,
+            zoom: zoomLevel)
+        mapView.animate(to: camera)
         dismiss(animated: true, completion: nil)
       }
 
