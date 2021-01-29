@@ -7,7 +7,8 @@ njng2 Ng, Nancy
 
 ChacaPatrick, Chaca, Patrick
 
-Arterio Rodrigues 
+
+ArterioRodrigues Rodrigues ,Arterio 
 
 ### Group info (check all that apply - add an X in the [ ])
 - [ ] We are a Daedalus Google Mentorship group
