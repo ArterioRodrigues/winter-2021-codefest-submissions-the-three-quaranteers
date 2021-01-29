@@ -265,10 +265,10 @@
             </objects>
             <point key="canvasLocation" x="-810.14492753623199" y="26.785714285714285"/>
         </scene>
-        <!--View Controller-->
+        <!--Review Pop Up View Controller-->
         <scene sceneID="NEt-IB-T8v">
             <objects>
-                <viewController id="oN8-Pu-mxM" sceneMemberID="viewController">
+                <viewController id="oN8-Pu-mxM" customClass="ReviewPopUpViewController" customModule="codefest" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Q8h-hS-S0T">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -287,6 +287,9 @@
                             <constraint firstItem="MeW-ta-Fcy" firstAttribute="top" secondItem="tWl-Yj-fgc" secondAttribute="top" id="YXX-Y9-rNK"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="ReviewPopUp" destination="MeW-ta-Fcy" id="D0m-zp-tpl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CUz-Kw-zp9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

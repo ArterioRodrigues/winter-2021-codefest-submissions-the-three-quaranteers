@@ -12,6 +12,7 @@ import GooglePlaces
 import Firebase
 import FirebaseDatabase
 class ReviewPopUpViewController: UIViewController {
+    @IBOutlet weak var ReviewPopUp: UIView!
     var places: GMSPlace!
     @IBOutlet weak var add: UIButton!
     @IBOutlet weak var name: UILabel!
