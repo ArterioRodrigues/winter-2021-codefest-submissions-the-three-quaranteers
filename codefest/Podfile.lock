@@ -357,7 +357,7 @@ DEPENDENCIES:
   - SwiftyJSON (= 5.0)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - abseil
     - Alamofire
     - BoringSSL-GRPC
@@ -407,6 +407,6 @@ SPEC CHECKSUMS:
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: 68973a26243e67f4d360a2e7e9c1d8efc22ebed1
+PODFILE CHECKSUM: f49c7d2017ac4dfab3487a4111eeb476ebe1759f
 
 COCOAPODS: 1.10.1

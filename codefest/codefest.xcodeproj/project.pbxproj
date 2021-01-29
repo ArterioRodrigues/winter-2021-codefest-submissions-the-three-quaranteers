@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		02CDAF685192D2AEA7BF4A7B /* Pods_codefest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3103CC25CC31B93DE5B8B8B9 /* Pods_codefest.framework */; };
+		912C078E25C4930F003A2A8D /* ReviewPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912C078D25C4930F003A2A8D /* ReviewPopup.swift */; };
 		B943442C25B719FC00A41101 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B943442B25B719FC00A41101 /* GoogleService-Info.plist */; };
 		D2CEEC3B25AD8262000E6DC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CEEC3A25AD8262000E6DC6 /* AppDelegate.swift */; };
 		D2CEEC3D25AD8262000E6DC6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CEEC3C25AD8262000E6DC6 /* SceneDelegate.swift */; };
@@ -18,7 +19,6 @@
 		D2CEEC5A25B16A99000E6DC6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CEEC5925B16A99000E6DC6 /* LoginViewController.swift */; };
 		D2CEEC5D25B16AAF000E6DC6 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CEEC5C25B16AAF000E6DC6 /* SignUpViewController.swift */; };
 		D2CEEC6025B16ABD000E6DC6 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CEEC5F25B16ABD000E6DC6 /* WelcomeViewController.swift */; };
-		D2F3485B25BBC289001163EA /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = D2F3485A25BBC289001163EA /* style.json */; };
 		D2F3486825C244F6001163EA /* PopUpViewControllerjViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F3486725C244F6001163EA /* PopUpViewControllerjViewController.swift */; };
 		D2F3883125B7E4FD008EB0E1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F3883025B7E4FD008EB0E1 /* Constants.swift */; };
 /* End PBXBuildFile section */
@@ -26,6 +26,7 @@
 /* Begin PBXFileReference section */
 		3103CC25CC31B93DE5B8B8B9 /* Pods_codefest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_codefest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		62D1075BEE990C37E515CC75 /* Pods-codefest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-codefest.release.xcconfig"; path = "Target Support Files/Pods-codefest/Pods-codefest.release.xcconfig"; sourceTree = "<group>"; };
+		912C078D25C4930F003A2A8D /* ReviewPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPopup.swift; sourceTree = "<group>"; };
 		B919F2174C3565E1B7B1D47B /* Pods-codefest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-codefest.debug.xcconfig"; path = "Target Support Files/Pods-codefest/Pods-codefest.debug.xcconfig"; sourceTree = "<group>"; };
 		B943442B25B719FC00A41101 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D2CEEC3725AD8262000E6DC6 /* codefest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = codefest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -39,7 +40,6 @@
 		D2CEEC5925B16A99000E6DC6 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D2CEEC5C25B16AAF000E6DC6 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		D2CEEC5F25B16ABD000E6DC6 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
-		D2F3485A25BBC289001163EA /* style.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = style.json; path = ../../../../../Downloads/style.json; sourceTree = "<group>"; };
 		D2F3486725C244F6001163EA /* PopUpViewControllerjViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewControllerjViewController.swift; sourceTree = "<group>"; };
 		D2F3883025B7E4FD008EB0E1 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -105,9 +105,9 @@
 				D2CEEC4325AD8267000E6DC6 /* Assets.xcassets */,
 				D2CEEC4525AD8267000E6DC6 /* LaunchScreen.storyboard */,
 				D2CEEC4825AD8267000E6DC6 /* Info.plist */,
-				D2F3485A25BBC289001163EA /* style.json */,
 				B943442B25B719FC00A41101 /* GoogleService-Info.plist */,
 				D2F3883025B7E4FD008EB0E1 /* Constants.swift */,
+				912C078D25C4930F003A2A8D /* ReviewPopup.swift */,
 			);
 			path = codefest;
 			sourceTree = "<group>";
@@ -175,7 +175,6 @@
 				D2CEEC4725AD8267000E6DC6 /* LaunchScreen.storyboard in Resources */,
 				B943442C25B719FC00A41101 /* GoogleService-Info.plist in Resources */,
 				D2CEEC4425AD8267000E6DC6 /* Assets.xcassets in Resources */,
-				D2F3485B25BBC289001163EA /* style.json in Resources */,
 				D2CEEC4225AD8262000E6DC6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -253,6 +252,7 @@
 				D2CEEC5A25B16A99000E6DC6 /* LoginViewController.swift in Sources */,
 				D2F3883125B7E4FD008EB0E1 /* Constants.swift in Sources */,
 				D2CEEC3B25AD8262000E6DC6 /* AppDelegate.swift in Sources */,
+				912C078E25C4930F003A2A8D /* ReviewPopup.swift in Sources */,
 				D2CEEC3D25AD8262000E6DC6 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
